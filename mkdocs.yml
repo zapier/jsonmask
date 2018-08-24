@@ -1,0 +1,13 @@
+site_name: jsonmask
+site_description: asdfasdfasdf
+site_author: Craig Labenz
+repo_url: https://github.com/craiglabenz/jsonmask
+
+theme: readthedocs
+
+pages:
+- Home: index.md
+- About:
+  - Release Notes: about/changelog.md
+  - Contributing: about/contributing.md
+  - License: about/license.md
