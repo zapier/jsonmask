@@ -1,5 +1,1 @@
-# Revision History
-
-## 0.0.0 (YYYY/MM/DD)
-
- - TBD
+docs/about/changelog.md
