@@ -2,14 +2,11 @@ Unix: [![Unix Build Status](https://img.shields.io/travis/craiglabenz/jsonmask/m
 
 # Overview
 
-asdfasdfasdf
-
-This project was generated with [cookiecutter](https://github.com/audreyr/cookiecutter) using [jacebrowning/template-python](https://github.com/jacebrowning/template-python).
-
-# Setup
+Implements [Google Partial Response](https://developers.google.com/discovery/v1/performance#partial-response) / [`json-mask`](https://github.com/nemtsov/json-mask) in Python.
 
 ## Requirements
 
+* Python 2.7
 * Python 3.6+
 
 ## Installation
@@ -23,7 +20,7 @@ $ pip install jsonmask
 or directly from the source code:
 
 ```sh
-$ git clone https://github.com/craiglabenz/jsonmask.git
+$ git clone https://github.com/zapier/jsonmask.git
 $ cd jsonmask
 $ python setup.py install
 ```
@@ -36,4 +33,35 @@ After installation, the package can imported:
 $ python
 >>> import jsonmask
 >>> jsonmask.__version__
+```
+
+To prune dictionaries:
+
+```py
+import jsonmask
+mask = jsonmask.parse_fields('a,b(c,d)')
+jsonmask.apply_json_mask(
+    {
+        'a': {
+            'nested_within_a': True,
+        },
+        'b' {
+            'c': True,
+            'd': {'Will get included?': 'Yes'},
+            'e': 'Tough luck here',
+        },
+        'c': 'Definitely hopeless',
+    },
+    mask,
+)
+
+>>> {
+        'a': {
+            'nested_within_a': True,
+        },
+        'b' {
+            'c': True,
+            'd': {'Will get included?': 'Yes'},
+        },
+    },
 ```
