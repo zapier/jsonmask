@@ -38,9 +38,9 @@ $ python
 To prune dictionaries:
 
 ```py
-import jsonmask
-mask = jsonmask.parse_fields('a,b(c,d)')
-jsonmask.apply_json_mask(
+>>> import jsonmask
+>>> mask = jsonmask.parse_fields('a,b(c,d)')
+>>> jsonmask.apply_json_mask(
     {
         'a': {
             'nested_within_a': True,
@@ -55,13 +55,13 @@ jsonmask.apply_json_mask(
     mask,
 )
 
->>> {
-        'a': {
-            'nested_within_a': True,
-        },
-        'b' {
-            'c': True,
-            'd': {'Will get included?': 'Yes'},
-        },
+{
+    'a': {
+        'nested_within_a': True,
     },
+    'b' {
+        'c': True,
+        'd': {'Will get included?': 'Yes'},
+    },
+}
 ```
