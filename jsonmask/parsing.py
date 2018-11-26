@@ -76,6 +76,15 @@ def _parse_partial_response(tokens, parent, stack):
 
 
 def parse_fields(text):
+    """Turns a string jsonmask into a Python dictionary representing the
+    desired data pruning
+
+    You will likely want to call ``jsonmask.mask.apply_json_mask``.
+
+    :text:      Plain text value representing desired structure, e.g., `a,b/c`
+
+    :returns:   dict
+    """
     if not text:
         return None
 

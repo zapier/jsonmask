@@ -11,6 +11,20 @@ else:
 
 
 def apply_json_mask(data, json_mask, is_negated=False, depth=1, max_depth=None):
+    """Takes a data structure and compiled JSON mask, and removes unwanted data
+
+    :data:          The Python dictionary you want to prune
+    :json_mask:     The compiled jsonmask indicating which data to keep
+                    and which to discard
+    :is_negated:    If True, membership in the json_mask indicates removal
+                    instead of inclusion
+    :depth:         Recursion flag to maintain progress toward `max_depth`
+    :max_depth:     Integer that, if supplied, sets a maximum depth on the
+                    supplied `json_mask`
+
+    :Returns:       dict
+
+    """
 
     if max_depth and depth >= max_depth:
         raise ValueError('Too much nested data!')
@@ -57,10 +71,10 @@ def is_structure_wildcard(structure):
 def should_include_variable(path, structure, is_negated=False):
     """Determine inclusion of variable at path given parsed jsonmask.
 
-    :path:          str     Something like "services.categories"
-    :structure:     dict    Nested structure whose keys may correlate
-                            with the dotted path's tokens
-    :is_negated:    dict    If True, represents `?excludes` instead of `?fields`
+    :path:          Something like "teacher.classes.students"
+    :structure:     Nested structure whose keys may correlate
+                    with the dotted path's tokens
+    :is_negated:    If True, represents `?excludes` instead of `?fields`
 
     :returns:       bool
     """

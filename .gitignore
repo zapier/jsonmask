@@ -3,6 +3,7 @@
 *.egg-info
 __pycache__
 .ipynb_checkpoints
+.DS_Store
 
 # Temporary OS files
 Icon*
@@ -16,11 +17,7 @@ Icon*
 *.pid
 
 # Generated documentation
-/docs/gen/
-/docs/apidocs/
-/site/
-/*.html
-/docs/*.png
+/docs/_build/
 
 # Google Drive
 *.gdoc

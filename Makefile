@@ -10,10 +10,11 @@ MODULES := $(wildcard $(PACKAGE)/*.py)
 
 # Virtual environment paths
 VIRTUAL_ENV ?= .venv
+RUN := poetry run
 
 # MAIN TASKS ##################################################################
 
-SNIFFER := poetry run sniffer
+SNIFFER := $(RUN) sniffer
 
 .PHONY: all
 all: install
@@ -27,7 +28,7 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 
 .PHONY: run ## Start the program
 run: install
-	poetry run python $(PACKAGE)/__main__.py
+	$(RUN) python $(PACKAGE)/__main__.py
 
 # SYSTEM DEPENDENCIES #########################################################
 
@@ -49,10 +50,10 @@ $(DEPENDENCIES):
 
 # CHECKS ######################################################################
 
-ISORT := poetry run isort
-PYLINT := poetry run pylint
-PYCODESTYLE := poetry run pycodestyle
-PYDOCSTYLE := poetry run pydocstyle
+ISORT := $(RUN) isort
+PYLINT := $(RUN) pylint
+PYCODESTYLE := $(RUN) pycodestyle
+PYDOCSTYLE := $(RUN) pydocstyle
 
 .PHONY: check
 check: isort pylint pycodestyle pydocstyle ## Run linters and static analysis
@@ -75,9 +76,9 @@ pydocstyle: install
 
 # TESTS #######################################################################
 
-PYTEST := poetry run pytest
-COVERAGE := poetry run coverage
-COVERAGE_SPACE := poetry run coverage.space
+PYTEST := $(RUN) pytest
+COVERAGE := $(RUN) coverage
+COVERAGE_SPACE := $(RUN) coverage.space
 
 RANDOM_SEED ?= $(shell date +%s)
 FAILURES := .cache/v/cache/lastfailed
@@ -118,8 +119,8 @@ read-coverage:
 
 # DOCUMENTATION ###############################################################
 
-PYREVERSE := poetry run pyreverse
-MKDOCS := poetry run mkdocs
+PYREVERSE := $(RUN) pyreverse
+MKDOCS := $(RUN) mkdocs
 
 MKDOCS_INDEX := site/index.html
 
@@ -133,14 +134,18 @@ docs/*.png: $(MODULES)
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
+# .PHONY: mkdocs
+# mkdocs: install $(MKDOCS_INDEX)
+# $(MKDOCS_INDEX): mkdocs.yml docs/*.md
+# 	ln -sf `realpath README.md --relative-to=docs` docs/index.md
+# 	ln -sf `realpath CHANGELOG.md --relative-to=docs/about` docs/about/changelog.md
+# 	ln -sf `realpath CONTRIBUTING.md --relative-to=docs/about` docs/about/contributing.md
+# 	ln -sf `realpath LICENSE.md --relative-to=docs/about` docs/about/license.md
+# 	$(MKDOCS) build --clean --strict
+
 .PHONY: mkdocs
-mkdocs: install $(MKDOCS_INDEX)
-$(MKDOCS_INDEX): mkdocs.yml docs/*.md
-	ln -sf `realpath README.md --relative-to=docs` docs/index.md
-	ln -sf `realpath CHANGELOG.md --relative-to=docs/about` docs/about/changelog.md
-	ln -sf `realpath CONTRIBUTING.md --relative-to=docs/about` docs/about/contributing.md
-	ln -sf `realpath LICENSE.md --relative-to=docs/about` docs/about/license.md
-	$(MKDOCS) build --clean --strict
+mkdocs: install
+	$(RUN) make -C docs
 
 .PHONY: mkdocs-live
 mkdocs-live: mkdocs
@@ -149,8 +154,8 @@ mkdocs-live: mkdocs
 
 # BUILD #######################################################################
 
-PYINSTALLER := poetry run pyinstaller
-PYINSTALLER_MAKESPEC := poetry run pyi-makespec
+PYINSTALLER := $(RUN) pyinstaller
+PYINSTALLER_MAKESPEC := $(RUN) pyi-makespec
 
 DIST_FILES := dist/*.tar.gz dist/*.whl
 EXE_FILES := dist/$(PROJECT).*
