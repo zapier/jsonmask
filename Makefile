@@ -1,7 +1,7 @@
 # Project settings
 PROJECT := jsonmask
 PACKAGE := jsonmask
-REPOSITORY := craiglabenz/jsonmask
+REPOSITORY := zapier/jsonmask
 
 # Project paths
 PACKAGES := $(PACKAGE) tests
@@ -45,7 +45,7 @@ install: $(DEPENDENCIES)
 
 $(DEPENDENCIES):
 	@ poetry config settings.virtualenvs.in-project true
-	poetry develop
+	poetry install
 	@ touch $@
 
 # CHECKS ######################################################################
@@ -78,7 +78,7 @@ pydocstyle: install
 
 PYTEST := $(RUN) pytest
 COVERAGE := $(RUN) coverage
-COVERAGE_SPACE := $(RUN) coverage.space
+COVERAGESPACE := $(RUN) coveragespace
 
 RANDOM_SEED ?= $(shell date +%s)
 FAILURES := .cache/v/cache/lastfailed
@@ -97,21 +97,21 @@ test-unit: install
 	@ ( mv $(FAILURES) $(FAILURES).bak || true ) > /dev/null 2>&1
 	$(PYTEST) $(PACKAGE) $(PYTEST_OPTIONS)
 	@ ( mv $(FAILURES).bak $(FAILURES) || true ) > /dev/null 2>&1
-	$(COVERAGE_SPACE) $(REPOSITORY) unit
+	$(COVERAGESPACE) $(REPOSITORY) unit
 
 .PHONY: test-int
 test-int: install
 	@ if test -e $(FAILURES); then $(PYTEST) tests $(PYTEST_RERUN_OPTIONS); fi
 	@ rm -rf $(FAILURES)
 	$(PYTEST) tests $(PYTEST_OPTIONS)
-	$(COVERAGE_SPACE) $(REPOSITORY) integration
+	$(COVERAGESPACE) $(REPOSITORY) integration
 
 .PHONY: test-all
 test-all: install
 	@ if test -e $(FAILURES); then $(PYTEST) $(PACKAGES) $(PYTEST_RERUN_OPTIONS); fi
 	@ rm -rf $(FAILURES)
 	$(PYTEST) $(PACKAGES) $(PYTEST_OPTIONS)
-	$(COVERAGE_SPACE) $(REPOSITORY) overall
+	$(COVERAGESPACE) $(REPOSITORY) overall
 
 .PHONY: read-coverage
 read-coverage:

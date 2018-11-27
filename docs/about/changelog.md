@@ -1,5 +1,5 @@
 # Revision History
 
-## 0.0.0 (YYYY/MM/DD)
+## 0.1.0 (2018/08/27)
 
- - TBD
+ - Initial release

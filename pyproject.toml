@@ -53,7 +53,7 @@ freezegun = "*"
 minilog = "~0.4"
 
 # Reports
-coverage-space = "*"
+coveragespace = "*"
 
 # Documentation
 mkdocs = "<1.0"
