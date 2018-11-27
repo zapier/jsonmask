@@ -1,4 +1,4 @@
-Unix: [![Unix Build Status](https://img.shields.io/travis/zapier/jsonmask/master.svg)](https://travis-ci.org/zapier/jsonmask) <br>Metrics: [![Coverage Status](https://img.shields.io/coveralls/zapier/jsonmask/master.svg)](https://coveralls.io/r/zapier/jsonmask) [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/zapier/jsonmask.svg)](https://scrutinizer-ci.com/g/zapier/jsonmask/?branch=master)<br>Usage: [![PyPI Version](https://img.shields.io/pypi/v/jsonmask.svg)](https://pypi.org/project/jsonmask)
+[![Build Status](https://img.shields.io/travis/zapier/jsonmask/master.svg)](https://travis-ci.org/zapier/jsonmask) [![Coverage Status](https://img.shields.io/coveralls/zapier/jsonmask/master.svg)](https://coveralls.io/r/zapier/jsonmask) [![PyPI Version](https://img.shields.io/pypi/v/jsonmask.svg)](https://pypi.org/project/jsonmask)
 
 # Overview
 
