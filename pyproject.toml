@@ -52,7 +52,6 @@ pytest-expecter = "*"
 pytest-random = "*"
 pytest-cov = "*"
 freezegun = "*"
-minilog = "~0.4"
 
 # Reports
 coveragespace = "*"

@@ -1,5 +1,9 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=superfluous-parens
+
 """Configuration file for sniffer."""
-# pylint: disable=superfluous-parens,bad-continuation
+
+from __future__ import unicode_literals
 
 import subprocess
 import time
@@ -18,7 +22,7 @@ else:
 watch_paths = ["jsonmask", "tests"]
 
 
-class Options:
+class Options(object):
     group = int(time.time())  # unique per run
     show_coverage = False
     rerun_args = None
