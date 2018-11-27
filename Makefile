@@ -1,7 +1,7 @@
 # Project settings
 PROJECT := jsonmask
 PACKAGE := jsonmask
-REPOSITORY := craiglabenz/jsonmask
+REPOSITORY := zapier/jsonmask
 
 # Project paths
 PACKAGES := $(PACKAGE) tests

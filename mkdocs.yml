@@ -1,7 +1,7 @@
 site_name: jsonmask
-site_description: asdfasdfasdf
+site_description: Implements Google Partial Response / json-mask in Python
 site_author: Craig Labenz
-repo_url: https://github.com/craiglabenz/jsonmask
+repo_url: https://github.com/zapier/jsonmask
 
 theme: readthedocs
 
