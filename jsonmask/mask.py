@@ -11,7 +11,7 @@ else:
 
 
 def apply_json_mask(data, json_mask, is_negated=False, depth=1, max_depth=None):
-    """Takes a data structure and compiled JSON mask, and removes unwanted data
+    """Take a data structure and compiled JSON mask, and remove unwanted data.
 
     :data:          The Python dictionary you want to prune
     :json_mask:     The compiled jsonmask indicating which data to keep
