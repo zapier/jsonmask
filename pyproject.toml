@@ -55,10 +55,6 @@ minilog = "~0.4"
 # Reports
 coveragespace = "*"
 
-# Documentation
-mkdocs = "<1.0"
-pygments = "*"
-
 # Build
 pyinstaller = "*"
 
