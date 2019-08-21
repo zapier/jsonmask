@@ -13,7 +13,7 @@ else:
 def apply_json_mask(data, json_mask, is_negated=False, depth=1, max_depth=None):
     """Take a data structure and compiled JSON mask, and remove unwanted data.
 
-    :data:          The Python dictionary you want to prune
+    :data:          The data you want to prune
     :json_mask:     The compiled jsonmask indicating which data to keep
                     and which to discard
     :is_negated:    If True, membership in the json_mask indicates removal
@@ -22,7 +22,7 @@ def apply_json_mask(data, json_mask, is_negated=False, depth=1, max_depth=None):
     :max_depth:     Integer that, if supplied, sets a maximum depth on the
                     supplied `json_mask`
 
-    :Returns:       dict
+    :Returns:       pruned data
 
     """
 
@@ -32,36 +32,41 @@ def apply_json_mask(data, json_mask, is_negated=False, depth=1, max_depth=None):
     if isinstance(json_mask, string_types):
         json_mask = parse_fields(json_mask)
 
-    allowed_data = {}
-    for key, subdata in data.items():
+    if isinstance(data, list):
+        allowed_list = []
+        for item in data:
+            allowed_list.append(apply_json_mask(
+                item,
+                json_mask,
+                is_negated=is_negated,
+                depth=depth + 1,
+                max_depth=max_depth,
+            ))
+        return allowed_list
 
-        if should_include_variable(key, json_mask, is_negated=is_negated):
+    if isinstance(data, dict):
+        allowed_data = {}
+        for key, subdata in data.items():
+            if should_include_variable(key, json_mask, is_negated=is_negated):
+                next_json_mask = json_mask.get(key, {})
+                # Dead ends in the mask indicate that want
+                # everything nested below this
+                if not next_json_mask:
+                    allowed_data[key] = subdata
+                    continue
 
-            # Terminal data
-            if not isinstance(subdata, dict):
-                allowed_data[key] = subdata
-                continue
-
-            next_json_mask = json_mask.get(key, {})
-
-            # Dead ends in the mask indicate that want
-            # everything nested below this
-            if not next_json_mask:
-                allowed_data[key] = subdata
-                continue
-
-            allowed_data.setdefault(key, {})
-            allowed_data[key].update(
-                apply_json_mask(
+                allowed_data.setdefault(key, {})
+                allowed_data[key] = apply_json_mask(
                     subdata,
                     next_json_mask,
                     is_negated=is_negated,
                     depth=depth + 1,
                     max_depth=max_depth,
-                ),
-            )
+                )
 
-    return allowed_data
+        return allowed_data
+
+    return data
 
 
 def is_structure_wildcard(structure):
