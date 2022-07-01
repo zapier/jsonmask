@@ -36,13 +36,26 @@ def apply_json_mask(data, json_mask, is_negated=False, depth=1, max_depth=None):
     for key, subdata in data.items():
 
         if should_include_variable(key, json_mask, is_negated=is_negated):
+            next_json_mask = json_mask.get(key, {})
 
+            if isinstance(subdata, list):
+                allowed_data[key] = [
+                    apply_json_mask(
+                        entry,
+                        next_json_mask,
+                        is_negated=is_negated,
+                        depth=depth + 1,
+                        max_depth=max_depth,
+                    )
+                    if isinstance(entry, dict)
+                    else entry
+                    for entry in subdata
+                ]
+                continue
             # Terminal data
             if not isinstance(subdata, dict):
                 allowed_data[key] = subdata
                 continue
-
-            next_json_mask = json_mask.get(key, {})
 
             # Dead ends in the mask indicate that want
             # everything nested below this
