@@ -23,6 +23,9 @@ def test_apply_json_mask():
         ({'a': {'b': 1}, 'b': {'asdf': 2}}, 'a,b/c', {'a': {'b': 1}, 'b': {}}, {'b': {'asdf': 2}},),
         ({'a': {'b': 1}, 'b': {'asdf': 2}}, 'a,b/asdf', ORIGINAL, {'b': {}},),
         ({'a': {'b': 1}, 'b': {'asdf': 2}}, 'a,c/c', {'a': {'b': 1}}, {'b': {'asdf': 2}},),
+        ({'a': [1,2,3]}, 'a', ORIGINAL, EMPTY,),
+        ({'a': [{'b': 1, 'c': [1,2,3]}]}, 'a(b)', {'a': [{'b':1}]}, {'a': [{'c': [1,2,3]}]},),
+        ({'a': [{'b': 1, 'c': [{'d': 1}, {'d':2, 'e': 3}]}]}, 'a(c(e))', {'a': [{'c':[{},{'e':3}]}]}, {'a': [{'b':1, 'c': [{'d':1}, {'d':2}]}]},),
     ]
 
     for index, (data, _mask, expected_result, expected_result_when_negated,) in enumerate(tests, start=1):
