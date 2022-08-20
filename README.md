@@ -45,7 +45,7 @@ To prune dictionaries:
         'a': {
             'nested_within_a': True,
         },
-        'b' {
+        'b': {
             'c': True,
             'd': {'Will get included?': 'Yes'},
             'e': 'Tough luck here',
@@ -54,12 +54,15 @@ To prune dictionaries:
     },
     mask,
 )
+```
+Output:
+```py
 
 {
     'a': {
         'nested_within_a': True,
     },
-    'b' {
+    'b': {
         'c': True,
         'd': {'Will get included?': 'Yes'},
     },
